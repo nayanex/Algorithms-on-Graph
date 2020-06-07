@@ -17,10 +17,9 @@ Correct output:
 '''
 
 import sys
-from typing import List
 
 
-def explore(adj_list: List[List[int]], x_node: int, y_node: int, visited: List[bool]):
+def explore(adj_list: list, x_node: int, y_node: int, visited: list):
     visited[x_node] = True
     for vertex in adj_list[x_node]:
         if vertex == y_node:
@@ -30,7 +29,7 @@ def explore(adj_list: List[List[int]], x_node: int, y_node: int, visited: List[b
             explore(adj_list, vertex, y_node, visited)
 
 
-def reach(adj_list: List[List[int]], x_node: int, y_node: int) -> int:
+def reach(adj_list: list, x_node: int, y_node: int) -> int:
     # write your code here
     visited = [False for _ in range(len(adj_list))]
     explore(adj_list, x_node, y_node, visited)
