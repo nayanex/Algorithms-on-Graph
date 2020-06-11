@@ -115,6 +115,8 @@ import sys
 
 def explore(adj_list: list, vertex: int, visited: list, cc: int, cc_num: list):
     visited[vertex] = True
+    print("-------------- VISITED VERTEX --------------")
+    print(vertex)
     cc_num[vertex] = cc
     for node in adj_list[vertex]:
         if not visited[node]:
@@ -123,11 +125,12 @@ def explore(adj_list: list, vertex: int, visited: list, cc: int, cc_num: list):
 
 def dfs(adj_list: list) -> list:
     visited = [False for _ in range(len(adj))]
-    cc_num = [False for _ in range(len(adj))]
+    cc_num = [None for _ in range(len(adj))]
+    cc = 1
     for vertex_neighbors in adj_list:
-        cc = 1
         for vertex in vertex_neighbors:
             if not visited[vertex]:
+                print("********************* NEW VISITED *********************************")
                 explore(adj_list, vertex, visited, cc, cc_num)
                 cc += 1
     return cc_num
@@ -136,8 +139,12 @@ def dfs(adj_list: list) -> list:
 def number_of_components(adj_list: list) -> int:
     result = 0
     # write your code here
-    cc_num = dfs(adj_list)
-    result = len(set(cc_num))
+    cc_num_set = set(dfs(adj_list))
+
+    cc_num_set.discard(None)
+    print("------------- CC num -------------------")
+    print(cc_num_set)
+    result = len(cc_num_set)
 
     return result
 
@@ -145,6 +152,9 @@ def number_of_components(adj_list: list) -> int:
 if __name__ == '__main__':
     user_input = sys.stdin.read()
     data = list(map(int, user_input.split()))
+    print("----------------")
+    print(set(data))
+    print(len(set(data)))
     n, m = data[0:2]
     data = data[2:]
     edges = list(zip(data[0:(2 * m):2], data[1:(2 * m):2]))
@@ -152,4 +162,15 @@ if __name__ == '__main__':
     for (a, b) in edges:
         adj[a - 1].append(b - 1)
         adj[b - 1].append(a - 1)
+    print("----------------")
+    print(adj)
+
+    count = 0
+    for node in adj:
+        if node:
+            count += 1
+
+    print("---------------- NUMBER OF NODES --------------------")
+    print(count)
+
     print(number_of_components(adj))
